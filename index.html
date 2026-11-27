@@ -104,6 +104,13 @@ a { color:inherit; }
 .model-card p { font-size:12.5px; color:var(--gray-700); line-height:1.6; margin-bottom:16px; flex:1; }
 .btn-dark { display:inline-block; align-self:flex-start; padding:8px 16px; background:var(--navy); color:#fff; text-decoration:none; font-size:13px; transition:background .15s; }
 .btn-dark:hover { background:var(--blue); }
+.btn-ghost { display:inline-block; padding:8px 16px; border:1px solid var(--gray-300); color:var(--gray-700); text-decoration:none; font-size:13px; transition:background .15s; }
+.btn-ghost:hover { background:var(--gray-100); }
+.btn-row { display:flex; gap:8px; flex-wrap:wrap; }
+.feature { border-top:2px solid var(--navy); padding-top:28px; }
+.feature-title { font-size:24px; }
+.feature-sub { font-size:14px; color:var(--gray-700); margin-bottom:24px; }
+.section-gap { margin-top:56px; }
 .model-meta { font-size:11px; color:var(--gray-500); font-style:italic; margin-top:10px; }
 
 /* Sidebar */
@@ -192,8 +199,40 @@ a { color:inherit; }
 
 <main class="main-wrap">
   <div>
+    <!-- ============ Featured equity research ============ -->
     <div class="section-label" id="coverage">
       <span class="section-label-text">Equity Research</span>
+      <span class="section-label-rule"></span>
+      <span class="section-label-count">1 report</span>
+    </div>
+    <div class="feature">
+      <div class="tag-row"><span class="pill">Information Technology · Memory Semiconductors</span><span class="date-tag">NASDAQGS: MU</span></div>
+      <h2 class="card-title feature-title">Micron Technology, Inc. — Priced for the Bust</h2>
+      <div class="feature-sub">Rating: <span class="up"><b>Buy</b></span> · Price Target $717.24 · <span class="up">+19.29%</span> implied upside vs. $601.25 close (Nov. 25, 2026)</div>
+      <div class="model-grid">
+        <div class="model-card">
+          <span class="pill">PDF Report</span>
+          <h4>Equity Research: Micron Technology, Inc. (MU)</h4>
+          <p>17-page initiation report: company and industry overview, investment thesis on the memory cycle, DCF and comps valuation weighted to a $717.24 target, key statistics and FY2027–29 forecasts.</p>
+          <div class="btn-row">
+            <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Equity%20Research%20Report.pdf" target="_blank" rel="noopener">View PDF</a>
+            <a class="btn-ghost" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Equity%20Research%20Report.pdf" download>Download</a>
+          </div>
+        </div>
+        <div class="model-card">
+          <span class="pill">Excel Model (.xlsx)</span>
+          <h4>Micron Financial Model</h4>
+          <p>Three-statement forecast to FY2031 driven by DRAM and NAND pricing and bit shipments, peer comps, DCF with perpetuity growth and EV/EBITDA exit multiples, WACC sensitivities, and a weighted target price.</p>
+          <div class="btn-row">
+            <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Financial%20Model.xlsx" download>Download Model</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ Valuation model library ============ -->
+    <div class="section-label section-gap" id="library">
+      <span class="section-label-text">Valuation Models</span>
       <span class="section-label-rule"></span>
       <span class="section-label-count" id="count"></span>
     </div>
@@ -204,9 +243,9 @@ a { color:inherit; }
     <div class="sidebar-section">
       <div class="sidebar-title">Latest Coverage</div>
       <div class="callout">
-        <div class="callout-label">Full Valuation Model</div>
+        <div class="callout-label">Equity Research</div>
         <div class="callout-title">Micron Technology, Inc. (MU)</div>
-        <div class="callout-meta">Blended PT $346.20 · <span class="up">+9.8%</span> vs $315.42</div>
+        <div class="callout-meta"><span class="up"><b>Buy</b></span> · PT $717.24 · <span class="up">+19.29%</span></div>
       </div>
     </div>
 
@@ -257,37 +296,6 @@ a { color:inherit; }
    base:true is the headline number. "models" become download cards
    (files live in the /models folder next to this page). */
 const ENTRIES = [
-  {
-    company: "Micron Technology, Inc.", ticker: "NASDAQGS: MU",
-    sector: "Semiconductors", industry: "Information Technology · Memory Semiconductors",
-    title: "Full Valuation Model", date: "November 26, 2026",
-    price: 315.42, metricLabel: "Blended PT",
-    cases: [
-      { name: "Bear case (DCF)", value: 231.13 },
-      { name: "Base case (DCF)", value: 337.74 },
-      { name: "Bull case (DCF)", value: 444.55 },
-      { name: "DCF implied price", value: 328.05 },
-      { name: "Trading comps implied price", value: 364.34 },
-      { name: "Blended target price (DCF + comps)", value: 346.20, base: true }
-    ],
-    assumptions: [
-      "WACC 12.38% (built from FactSet screen; FactSet WACC 12.35%)",
-      "Terminal value via exit multiple off FY2028 base year",
-      "Unlevered FCF from a full forecast with operating NWC at ~22% of sales",
-      "Target price is a 50/50 blend of DCF and trading comps"
-    ],
-    extra: "Earlier standalone DCF (Jan 22, 2026, $397.58 price): low $338.31 · mid $412.46 · high $460.33 · \"crazy-rich\" $546.98.",
-    models: [
-      { label: "PDF Report", name: "Equity Research: Micron Technology (MU)", file: "Micron Technology (NASDAQ MU) - Equity Research Report.pdf", view: true,
-        desc: "Full written equity research report on Micron Technology (NASDAQ: MU)." },
-      { label: "Excel Model (.xlsx)", name: "Micron Financial Model", file: "Micron Technology (NASDAQ MU) - Financial Model.xlsx",
-        desc: "Financial model supporting the Micron equity research report." },
-      { label: "Excel Model (.xlsx)", name: "Micron Full Valuation Model", file: "MU-Full-Valuation-Model.xlsx",
-        desc: "Inputs, FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, segment and industry analysis." },
-      { label: "Excel Model (.xlsx)", name: "Micron DCF (January 2026)", file: "MU-DCF.xlsx",
-        desc: "Four-scenario DCF with WACC × terminal growth sensitivity grid, historical and forecast income statement, cash flow and balance sheet." }
-    ]
-  },
   {
     company: "NVIDIA Corporation", ticker: "NASDAQGS: NVDA",
     sector: "Semiconductors", industry: "Information Technology · Semiconductors",
@@ -375,8 +383,7 @@ const pct = (v, p) => { const x = (v / p - 1) * 100; return `<span class="${x >=
 const sectors = [...new Set(ENTRIES.map(e => e.sector))];
 let active = "All";
 
-const nModels = ENTRIES.reduce((n, e) => n + e.models.filter(m => !m.view).length, 0);
-$("hero-stats").innerHTML = [[ENTRIES.length, "Companies"], [nModels, "Models"], [ENTRIES.reduce((n, e) => n + e.models.filter(m => m.view).length, 0), "Research Reports"]]
+$("hero-stats").innerHTML = [[ENTRIES.length + 1, "Companies"], [ENTRIES.length + 1, "Models"], [1, "Equity Report"]]
   .map(([v, l]) => `<div class="hero-stat"><div class="hero-stat-val">${v}</div><div class="hero-stat-lbl">${l}</div></div>`).join("");
 
 $("filters").innerHTML = ["All", ...sectors].map(c =>
@@ -437,7 +444,7 @@ function card(e) {
 
 function render() {
   const list = ENTRIES.filter(e => active === "All" || e.sector === active);
-  $("count").textContent = `${list.length} ${list.length === 1 ? "report" : "reports"}`;
+  $("count").textContent = `${list.length} ${list.length === 1 ? "model" : "models"}`;
   $("cards").innerHTML = list.map(card).join("");
 }
 $("cards").addEventListener("click", e => {
