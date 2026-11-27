@@ -219,7 +219,7 @@ a { color:inherit; }
         <li><span class="chk chk-done">✓</span>Terminal value (Gordon growth &amp; exit multiple)</li>
         <li><span class="chk chk-done">✓</span>WACC × TGR sensitivity (MU)</li>
         <li><span class="chk chk-done">✓</span>Trading comps &amp; blended target (MU)</li>
-        <li><span class="chk chk-pend">○</span>Written research reports (PDF)</li>
+        <li><span class="chk chk-done">✓</span>Written equity research report (MU)</li>
       </ul>
     </div>
 
@@ -278,9 +278,13 @@ const ENTRIES = [
     ],
     extra: "Earlier standalone DCF (Jan 22, 2026, $397.58 price): low $338.31 · mid $412.46 · high $460.33 · \"crazy-rich\" $546.98.",
     models: [
-      { label: "Excel Model (.xlsx)", name: "Micron Full Valuation Model", file: "models/MU-Full-Valuation-Model.xlsx",
+      { label: "PDF Report", name: "Equity Research: Micron Technology (MU)", file: "Micron Technology (NASDAQ MU) - Equity Research Report.pdf", view: true,
+        desc: "Full written equity research report on Micron Technology (NASDAQ: MU)." },
+      { label: "Excel Model (.xlsx)", name: "Micron Financial Model", file: "Micron Technology (NASDAQ MU) - Financial Model.xlsx",
+        desc: "Financial model supporting the Micron equity research report." },
+      { label: "Excel Model (.xlsx)", name: "Micron Full Valuation Model", file: "MU-Full-Valuation-Model.xlsx",
         desc: "Inputs, FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, segment and industry analysis." },
-      { label: "Excel Model (.xlsx)", name: "Micron DCF (January 2026)", file: "models/MU-DCF.xlsx",
+      { label: "Excel Model (.xlsx)", name: "Micron DCF (January 2026)", file: "MU-DCF.xlsx",
         desc: "Four-scenario DCF with WACC × terminal growth sensitivity grid, historical and forecast income statement, cash flow and balance sheet." }
     ]
   },
@@ -300,7 +304,7 @@ const ENTRIES = [
       "Calendar-year forecast to 2031 with segment revenue build"
     ],
     models: [
-      { label: "Excel Model (.xlsx)", name: "NVIDIA DCF Model", file: "models/NVDA-DCF.xlsx",
+      { label: "Excel Model (.xlsx)", name: "NVIDIA DCF Model", file: "NVDA-DCF.xlsx",
         desc: "Scenario-switch DCF, WACC build, historical income statement and cash flow, revenue model, charts and news log." }
     ]
   },
@@ -318,7 +322,7 @@ const ENTRIES = [
       "Forecast to 2030 from historical and estimated income statement and cash flow"
     ],
     models: [
-      { label: "Excel Model (.xlsx)", name: "Novo Nordisk DCF Model", file: "models/NVO-DCF.xlsx",
+      { label: "Excel Model (.xlsx)", name: "Novo Nordisk DCF Model", file: "NVO-DCF.xlsx",
         desc: "Scenario-switch DCF, WACC build, historical and estimated income statement and cash flow, share data." }
     ]
   },
@@ -338,7 +342,7 @@ const ENTRIES = [
       "Forecast to 2030 reflecting cloud infrastructure revenue ramp"
     ],
     models: [
-      { label: "Excel Model (.xlsx)", name: "Oracle DCF Model", file: "models/ORCL-DCF.xlsx",
+      { label: "Excel Model (.xlsx)", name: "Oracle DCF Model", file: "ORCL-DCF.xlsx",
         desc: "Scenario-switch DCF, WACC build, historical and estimated income statement and cash flow, charts." }
     ]
   },
@@ -358,7 +362,7 @@ const ENTRIES = [
       "Conservative: WACC 9.0%, TGR 2.0% · Optimistic: WACC 7.0%, TGR 3.0%"
     ],
     models: [
-      { label: "Excel Model (.xlsx)", name: "Meta DCF Model", file: "models/META-DCF.xlsx",
+      { label: "Excel Model (.xlsx)", name: "Meta DCF Model", file: "META-DCF.xlsx",
         desc: "Scenario-switch DCF, WACC build, revenue model, historical income statement and cash flow, charts." }
     ]
   }
@@ -371,8 +375,8 @@ const pct = (v, p) => { const x = (v / p - 1) * 100; return `<span class="${x >=
 const sectors = [...new Set(ENTRIES.map(e => e.sector))];
 let active = "All";
 
-const nModels = ENTRIES.reduce((n, e) => n + e.models.length, 0);
-$("hero-stats").innerHTML = [[ENTRIES.length, "Companies"], [nModels, "Models"], [sectors.length, "Sectors"]]
+const nModels = ENTRIES.reduce((n, e) => n + e.models.filter(m => !m.view).length, 0);
+$("hero-stats").innerHTML = [[ENTRIES.length, "Companies"], [nModels, "Models"], [ENTRIES.reduce((n, e) => n + e.models.filter(m => m.view).length, 0), "Research Reports"]]
   .map(([v, l]) => `<div class="hero-stat"><div class="hero-stat-val">${v}</div><div class="hero-stat-lbl">${l}</div></div>`).join("");
 
 $("filters").innerHTML = ["All", ...sectors].map(c =>
@@ -424,7 +428,7 @@ function card(e) {
           <span class="pill">${m.label}</span>
           <h4>${m.name}</h4>
           <p>${m.desc}</p>
-          <a class="btn-dark" href="${m.file}" download>Download Model</a>
+          <div>${m.view ? `<a class="btn-dark" href="${encodeURI(m.file)}" target="_blank" rel="noopener">View PDF</a> ` : ""}<a class="btn-dark" href="${encodeURI(m.file)}" download>${m.view ? "Download" : "Download Model"}</a></div>
         </div>`).join("")}</div>
       </div>
     </div>
