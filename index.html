@@ -102,6 +102,14 @@ a { color:inherit; }
 .model-card .pill { align-self:flex-start; margin-bottom:12px; }
 .model-card h4 { font-family:var(--serif); font-size:16px; font-weight:400; color:var(--navy); line-height:1.3; margin-bottom:8px; }
 .model-card p { font-size:12.5px; color:var(--gray-700); line-height:1.6; margin-bottom:16px; flex:1; }
+.facts { margin:4px 0 20px; flex:1; }
+.fact { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:9px 0; border-top:1px solid var(--gray-200); }
+.fact:last-child { border-bottom:1px solid var(--gray-200); }
+.fact span { font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:var(--gray-500); font-weight:600; }
+.fact b { font-family:var(--serif); font-size:15px; font-weight:400; color:var(--navy); }
+.take { padding:10px 0 2px; border-top:1px solid var(--gray-200); }
+.take span { display:block; font-size:10px; letter-spacing:1.2px; text-transform:uppercase; color:var(--gray-500); font-weight:600; margin-bottom:4px; }
+.take q { font-family:var(--serif); font-style:italic; font-size:13.5px; color:var(--navy); line-height:1.55; quotes:none; }
 .btn-dark { display:inline-block; align-self:flex-start; padding:8px 16px; background:var(--navy); color:#fff; text-decoration:none; font-size:13px; transition:background .15s; }
 .btn-dark:hover { background:var(--blue); }
 .btn-ghost { display:inline-block; padding:8px 16px; border:1px solid var(--gray-300); color:var(--gray-700); text-decoration:none; font-size:13px; transition:background .15s; }
@@ -223,7 +231,7 @@ a { color:inherit; }
         <div class="model-card">
           <span class="pill">PDF Report</span>
           <h4>Equity Research: Micron Technology, Inc. (MU)</h4>
-          <p>Initiation report (17 pages): company and industry overview, investment thesis on the memory cycle, DCF and comps valuation weighted to a $717.24 target, key statistics and FY2027 to FY2029 forecasts.</p>
+          <div class="facts"><div class="fact"><span>Price Target</span><b>$717.24</b></div><div class="take"><span>Key Takeaway</span><q>The market is pricing in a memory bust that our base case already assumes, and contracted price floors still support a higher value.</q></div></div>
           <div class="btn-row">
             <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Equity%20Research%20Report.pdf" target="_blank" rel="noopener">View PDF</a>
             <a class="btn-ghost" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Equity%20Research%20Report.pdf" download>Download</a>
@@ -232,7 +240,7 @@ a { color:inherit; }
         <div class="model-card">
           <span class="pill">Excel Model (.xlsx)</span>
           <h4>Micron Financial Model (November 2026)</h4>
-          <p>Income statement, balance sheet and cash flow forecast to FY2031, driven by DRAM and NAND pricing and bit shipments, peer comps, DCF with perpetuity growth and EV/EBITDA exit multiples, WACC sensitivities, and a weighted target price.</p>
+          <div class="facts"><div class="fact"><span>Price Target</span><b>$717.24</b></div><div class="fact"><span>WACC</span><b>13.65%</b></div><div class="fact"><span>Terminal Growth</span><b>3.0%</b></div><div class="fact"><span>Exit Multiple</span><b>6.5x EV/EBITDA</b></div></div>
           <div class="btn-row">
             <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Financial%20Model.xlsx" download>Download Model</a>
           </div>
@@ -323,11 +331,11 @@ const ENTRIES = [
     ],
     models: [
       { label: "PDF Report", name: "Equity Research: Micron Technology, Inc. (MU)", file: "Micron Technology (NASDAQ MU) - Equity Research Report.pdf", view: true,
-        desc: "Initiation report (17 pages): company and industry overview, investment thesis, DCF and comps valuation, key statistics and forecasts." },
+        facts: [["Price Target", "$717.24"]], takeaway: "The market is pricing in a memory bust that our base case already assumes, and contracted price floors still support a higher value." },
       { label: "Excel Model (.xlsx)", name: "Micron Financial Model (November 2026)", file: "Micron Technology (NASDAQ MU) - Financial Model.xlsx",
-        desc: "Income statement, balance sheet and cash flow forecast to FY2031, peer comps, DCF with perpetuity growth and exit multiples, WACC sensitivities, weighted target price." },
+        facts: [["Price Target", "$717.24"], ["WACC", "13.65%"], ["Terminal Growth", "3.0%"], ["Exit Multiple", "6.5x EV/EBITDA"]] },
       { label: "Excel Model (.xlsx)", name: "Micron Full Valuation Model (January 2026)", file: "MU-Full-Valuation-Model.xlsx",
-        desc: "Earlier valuation: FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, segment and industry analysis." }
+        facts: [["Price Target", "$346.20"], ["WACC", "12.38%"], ["Terminal Value", "Exit multiple"]] }
     ]
   },
   {
@@ -347,7 +355,7 @@ const ENTRIES = [
     ],
     models: [
       { label: "Excel Model (.xlsx)", name: "NVIDIA DCF Model", file: "NVDA-DCF.xlsx",
-        desc: "DCF with scenario switches, WACC build, historical income statement and cash flow, revenue model, charts and news log." }
+        facts: [["Base Case", "$206.40"], ["WACC", "11.9%"], ["Terminal Growth", "3.5%"]] }
     ]
   },
   {
@@ -365,7 +373,7 @@ const ENTRIES = [
     ],
     models: [
       { label: "Excel Model (.xlsx)", name: "Novo Nordisk DCF Model", file: "NVO-DCF.xlsx",
-        desc: "DCF with scenario switches, WACC build, historical and estimated income statement and cash flow, share data." }
+        facts: [["Base Case", "$29.82"], ["WACC", "6.75%"], ["Terminal Growth", "3.0%"]] }
     ]
   },
   {
@@ -385,7 +393,7 @@ const ENTRIES = [
     ],
     models: [
       { label: "Excel Model (.xlsx)", name: "Oracle DCF Model", file: "ORCL-DCF.xlsx",
-        desc: "DCF with scenario switches, WACC build, historical and estimated income statement and cash flow, charts." }
+        facts: [["Base Case", "$167.68"], ["WACC", "8.36%"], ["Terminal Growth", "3.0%"]] }
     ]
   },
   {
@@ -405,7 +413,7 @@ const ENTRIES = [
     ],
     models: [
       { label: "Excel Model (.xlsx)", name: "Meta DCF Model", file: "META-DCF.xlsx",
-        desc: "DCF with scenario switches, WACC build, revenue model, historical income statement and cash flow, charts." }
+        facts: [["Base Case", "$430.47"], ["WACC", "8.0%"], ["Terminal Growth", "2.5%"]] }
     ]
   }
 ];
@@ -462,7 +470,7 @@ function card(e) {
         <div class="model-grid">${e.models.map(m => `<div class="model-card">
           <span class="pill">${m.label}</span>
           <h4>${m.name}</h4>
-          <p>${m.desc}</p>
+          <div class="facts">${m.facts.map(([k, v]) => `<div class="fact"><span>${k}</span><b>${v}</b></div>`).join("")}${m.takeaway ? `<div class="take"><span>Key Takeaway</span><q>${m.takeaway}</q></div>` : ""}</div>
           <div>${m.view ? `<a class="btn-dark" href="${encodeURI(m.file)}" target="_blank" rel="noopener">View PDF</a> ` : ""}<a class="btn-dark" href="${encodeURI(m.file)}" download>${m.view ? "Download" : "Download Model"}</a></div>
         </div>`).join("")}</div>
       </div>
