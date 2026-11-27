@@ -227,14 +227,6 @@ a { color:inherit; }
             <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Financial%20Model.xlsx" download>Download Model</a>
           </div>
         </div>
-        <div class="model-card">
-          <span class="pill">Excel Model (.xlsx)</span>
-          <h4>Micron Full Valuation Model (January 2026)</h4>
-          <p>Earlier valuation: FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, and segment and industry analysis.</p>
-          <div class="btn-row">
-            <a class="btn-dark" href="MU-Full-Valuation-Model.xlsx" download>Download Model</a>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -304,6 +296,32 @@ a { color:inherit; }
    base:true is the headline number. "models" become download cards
    (files live in the /models folder next to this page). */
 const ENTRIES = [
+  {
+    company: "Micron Technology, Inc.", ticker: "NASDAQGS: MU",
+    sector: "Semiconductors", industry: "Information Technology · Memory Semiconductors",
+    title: "Equity Research & Valuation", date: "November 25, 2026",
+    price: 601.25, metricLabel: "Price target",
+    cases: [
+      { name: "DCF: perpetuity growth (50% weight)", value: 803.12 },
+      { name: "DCF: exit multiple, mid (20% weight)", value: 856.98 },
+      { name: "Comps: EV / LTM EBITDA median (15% weight)", value: 464.60 },
+      { name: "Comps: forward P/E median (15% weight)", value: 497.33 },
+      { name: "Weighted price target (Buy)", value: 717.24, base: true }
+    ],
+    assumptions: [
+      "Rating: Buy (Buy above +15%, Sell below −15%); total return 19.4% including dividend",
+      "WACC 13.65%, perpetuity growth 3.0%, exit multiple 6.5x EV/EBITDA (mid)",
+      "Three-statement forecast to FY2031 driven by DRAM and NAND pricing and bit shipments"
+    ],
+    models: [
+      { label: "PDF Report", name: "Equity Research: Micron Technology, Inc. (MU)", file: "Micron Technology (NASDAQ MU) - Equity Research Report.pdf", view: true,
+        desc: "17-page initiation report: company and industry overview, investment thesis, DCF and comps valuation, key statistics and forecasts." },
+      { label: "Excel Model (.xlsx)", name: "Micron Financial Model (November 2026)", file: "Micron Technology (NASDAQ MU) - Financial Model.xlsx",
+        desc: "Three-statement forecast to FY2031, peer comps, DCF with perpetuity growth and exit multiples, WACC sensitivities, weighted target price." },
+      { label: "Excel Model (.xlsx)", name: "Micron Full Valuation Model (January 2026)", file: "MU-Full-Valuation-Model.xlsx",
+        desc: "Earlier valuation: FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, segment and industry analysis." }
+    ]
+  },
   {
     company: "NVIDIA Corporation", ticker: "NASDAQGS: NVDA",
     sector: "Semiconductors", industry: "Information Technology · Semiconductors",
@@ -391,7 +409,7 @@ const pct = (v, p) => { const x = (v / p - 1) * 100; return `<span class="${x >=
 const sectors = [...new Set(ENTRIES.map(e => e.sector))];
 let active = "All";
 
-$("hero-stats").innerHTML = [[ENTRIES.length + 1, "Companies"], [ENTRIES.length + 2, "Models"], [1, "Equity Report"]]
+$("hero-stats").innerHTML = [[ENTRIES.length, "Companies"], [ENTRIES.length + 1, "Models"], [1, "Equity Report"]]
   .map(([v, l]) => `<div class="hero-stat"><div class="hero-stat-val">${v}</div><div class="hero-stat-lbl">${l}</div></div>`).join("");
 
 $("filters").innerHTML = ["All", ...sectors].map(c =>
