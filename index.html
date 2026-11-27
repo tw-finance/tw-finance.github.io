@@ -97,7 +97,7 @@ a { color:inherit; }
 .table-note { font-size:11px; color:var(--gray-500); margin-top:10px; line-height:1.6; font-style:italic; border-left:2px solid var(--gray-300); padding-left:10px; }
 
 /* Model download cards */
-.model-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+.model-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
 .model-card { border:1px solid var(--gray-300); padding:20px; display:flex; flex-direction:column; }
 .model-card .pill { align-self:flex-start; margin-bottom:12px; }
 .model-card h4 { font-family:var(--serif); font-size:16px; font-weight:400; color:var(--navy); line-height:1.3; margin-bottom:8px; }
@@ -221,10 +221,18 @@ a { color:inherit; }
         </div>
         <div class="model-card">
           <span class="pill">Excel Model (.xlsx)</span>
-          <h4>Micron Financial Model</h4>
+          <h4>Micron Financial Model (November 2026)</h4>
           <p>Three-statement forecast to FY2031 driven by DRAM and NAND pricing and bit shipments, peer comps, DCF with perpetuity growth and EV/EBITDA exit multiples, WACC sensitivities, and a weighted target price.</p>
           <div class="btn-row">
             <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Financial%20Model.xlsx" download>Download Model</a>
+          </div>
+        </div>
+        <div class="model-card">
+          <span class="pill">Excel Model (.xlsx)</span>
+          <h4>Micron Full Valuation Model (January 2026)</h4>
+          <p>Earlier valuation: FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, and segment and industry analysis.</p>
+          <div class="btn-row">
+            <a class="btn-dark" href="MU-Full-Valuation-Model.xlsx" download>Download Model</a>
           </div>
         </div>
       </div>
@@ -383,7 +391,7 @@ const pct = (v, p) => { const x = (v / p - 1) * 100; return `<span class="${x >=
 const sectors = [...new Set(ENTRIES.map(e => e.sector))];
 let active = "All";
 
-$("hero-stats").innerHTML = [[ENTRIES.length + 1, "Companies"], [ENTRIES.length + 1, "Models"], [1, "Equity Report"]]
+$("hero-stats").innerHTML = [[ENTRIES.length + 1, "Companies"], [ENTRIES.length + 2, "Models"], [1, "Equity Report"]]
   .map(([v, l]) => `<div class="hero-stat"><div class="hero-stat-val">${v}</div><div class="hero-stat-lbl">${l}</div></div>`).join("");
 
 $("filters").innerHTML = ["All", ...sectors].map(c =>
