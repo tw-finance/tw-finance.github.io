@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equity Valuation Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#051c2c; --blue:#0a5c8f; --blue-mid:#1a7ab5; --blue-light:#e8f2f8;
+  --gray-100:#f7f7f5; --gray-200:#ebebeb; --gray-300:#d0d0d0; --gray-500:#767676; --gray-700:#404040;
+  --black:#1a1a1a; --white:#fff; --rule:#d0d0d0; --red:#a3241f; --green:#1a6b3a;
+  --serif:"Libre Baskerville", Georgia, serif;
+  --sans:Calibri, "Gill Sans MT", "Gill Sans", "Segoe UI", sans-serif;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); background:var(--white); color:var(--black); font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+a { color:inherit; }
+.up { color:var(--green); } .down { color:var(--red); }
+
+/* Top bar */
+.top-bar { background:var(--navy); color:rgba(255,255,255,.7); font-size:11px; letter-spacing:.8px; padding:8px 48px; display:flex; justify-content:space-between; align-items:center; }
+.top-link { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); padding:4px 12px; color:rgba(255,255,255,.8); text-decoration:none; transition:background .15s; }
+.top-link:hover { background:rgba(255,255,255,.15); color:#fff; }
+
+/* Header */
+.site-header { border-bottom:3px solid var(--navy); padding:0 48px; }
+.header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:stretch; justify-content:space-between; min-height:72px; }
+.logo-area { display:flex; align-items:center; gap:16px; padding:16px 0; text-decoration:none; }
+.logo-mark { width:40px; height:40px; background:var(--navy); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.logo-mark span { color:#fff; font-size:11px; font-weight:700; letter-spacing:-.5px; }
+.logo-text-main { font-family:var(--serif); font-size:18px; font-weight:700; color:var(--navy); line-height:1.1; letter-spacing:-.3px; }
+.logo-text-sub { font-size:11px; color:var(--gray-500); letter-spacing:1px; text-transform:uppercase; margin-top:2px; }
+.header-nav { display:flex; align-items:stretch; }
+.header-nav a { display:flex; align-items:center; padding:0 20px; font-size:13px; color:var(--gray-700); text-decoration:none; border-bottom:3px solid transparent; margin-bottom:-3px; letter-spacing:.2px; transition:color .15s, border-color .15s; }
+.header-nav a:hover { color:var(--navy); border-bottom-color:var(--navy); }
+.header-nav a.active { color:var(--navy); border-bottom-color:var(--blue); font-weight:600; }
+
+/* Hero */
+.hero { background:var(--navy); padding:56px 48px 48px; }
+.hero-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 320px; gap:64px; align-items:end; }
+.hero-eyebrow { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,.45); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.hero-eyebrow::before { content:""; width:24px; height:1px; background:var(--blue-mid); }
+.hero h1 { font-family:var(--serif); font-size:clamp(30px,4vw,44px); font-weight:400; color:#fff; line-height:1.18; letter-spacing:-.5px; margin-bottom:18px; }
+.hero h1 em { font-style:italic; color:rgba(255,255,255,.7); }
+.hero-desc { font-size:14px; color:rgba(255,255,255,.55); line-height:1.7; max-width:500px; }
+.hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.08); align-self:stretch; }
+.hero-stat { background:rgba(255,255,255,.04); padding:20px; }
+.hero-stat-val { font-family:var(--serif); font-size:28px; color:#fff; line-height:1; margin-bottom:5px; }
+.hero-stat-lbl { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:rgba(255,255,255,.35); }
+
+/* Filter bar */
+.filter-bar { background:var(--gray-100); border-bottom:1px solid var(--gray-200); padding:0 48px; overflow-x:auto; }
+.filter-bar-inner { max-width:1200px; margin:0 auto; display:flex; }
+.filter-tab { font-size:13px; color:var(--gray-500); padding:14px 20px; cursor:pointer; border:0; background:none; font-family:var(--sans); border-bottom:2px solid transparent; margin-bottom:-1px; white-space:nowrap; transition:.15s; }
+.filter-tab:hover { color:var(--navy); }
+.filter-tab.active { color:var(--navy); border-bottom-color:var(--blue); font-weight:600; }
+
+/* Layout */
+.main-wrap { max-width:1200px; margin:0 auto; padding:48px; display:grid; grid-template-columns:1fr 290px; gap:56px; }
+.section-label { display:flex; align-items:center; gap:12px; margin-bottom:24px; }
+.section-label-text { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray-500); font-weight:600; }
+.section-label-rule { flex:1; height:1px; background:var(--rule); }
+.section-label-count { font-size:11px; color:var(--gray-500); }
+
+/* Cards */
+.card { border-top:1px solid var(--rule); }
+.card:first-child { border-top:2px solid var(--navy); }
+.card-header { padding:28px 0; cursor:pointer; display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start; }
+.card-header:hover .card-title { color:var(--blue); }
+.tag-row { display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
+.pill { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--blue); font-weight:600; background:var(--blue-light); padding:3px 10px; }
+.date-tag { font-size:11px; color:var(--gray-500); }
+.card-title { font-family:var(--serif); font-size:20px; font-weight:400; color:var(--navy); line-height:1.25; letter-spacing:-.2px; margin-bottom:6px; transition:color .15s; }
+.card-intro { font-size:13.5px; color:var(--gray-500); line-height:1.55; max-width:580px; }
+.card-right { text-align:right; padding-top:4px; white-space:nowrap; }
+.card-metric { font-family:var(--serif); font-size:24px; font-weight:700; color:var(--navy); line-height:1; margin-bottom:4px; }
+.card-metric-sub { font-size:11px; color:var(--gray-500); margin-bottom:12px; }
+.expand-btn { display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--blue); font-weight:600; cursor:pointer; background:none; border:0; padding:0; font-family:var(--sans); }
+.expand-btn .arr { font-size:9px; transition:transform .2s; display:inline-block; }
+.card.open .expand-btn .arr { transform:rotate(180deg); }
+.card-detail { display:none; padding-bottom:36px; border-top:1px solid var(--gray-200); }
+.card.open .card-detail { display:block; }
+.detail-line { font-size:13.5px; color:var(--gray-700); padding:14px 0; border-bottom:1px solid var(--gray-200); }
+.detail-line strong { color:var(--black); }
+.block { margin-top:20px; }
+.block-title { font-size:13px; font-weight:700; color:var(--black); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.block-title::after { content:""; flex:1; height:1px; background:var(--gray-200); }
+.block ul { margin-left:20px; }
+.block li { font-size:13.5px; color:var(--gray-700); line-height:1.65; margin-bottom:4px; }
+.data-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+.data-table th { background:var(--navy); color:#fff; font-size:11px; font-weight:600; padding:9px 12px; text-align:left; letter-spacing:.3px; }
+.data-table th.num, .data-table td.num { text-align:right; }
+.data-table td { padding:9px 12px; border-bottom:1px solid var(--gray-200); color:var(--gray-700); }
+.data-table tr.hl td { background:var(--blue-light); color:var(--navy); font-weight:600; }
+.table-note { font-size:11px; color:var(--gray-500); margin-top:10px; line-height:1.6; font-style:italic; border-left:2px solid var(--gray-300); padding-left:10px; }
+
+/* Model download cards */
+.model-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+.model-card { border:1px solid var(--gray-300); padding:20px; display:flex; flex-direction:column; }
+.model-card .pill { align-self:flex-start; margin-bottom:12px; }
+.model-card h4 { font-family:var(--serif); font-size:16px; font-weight:400; color:var(--navy); line-height:1.3; margin-bottom:8px; }
+.model-card p { font-size:12.5px; color:var(--gray-700); line-height:1.6; margin-bottom:16px; flex:1; }
+.btn-dark { display:inline-block; align-self:flex-start; padding:8px 16px; background:var(--navy); color:#fff; text-decoration:none; font-size:13px; transition:background .15s; }
+.btn-dark:hover { background:var(--blue); }
+.model-meta { font-size:11px; color:var(--gray-500); font-style:italic; margin-top:10px; }
+
+/* Sidebar */
+.cta { background:var(--navy); padding:24px; margin-bottom:28px; }
+.cta h3 { font-family:var(--serif); font-size:16px; font-weight:400; color:#fff; margin-bottom:8px; line-height:1.3; }
+.cta p { font-size:12px; color:rgba(255,255,255,.5); line-height:1.6; margin-bottom:16px; }
+.btn-primary { display:block; width:100%; padding:11px 16px; background:var(--blue-mid); color:#fff; font-size:13px; font-weight:600; text-align:center; text-decoration:none; transition:background .15s; }
+.btn-primary:hover { background:var(--blue); }
+.sidebar-section { margin-bottom:28px; padding-bottom:28px; border-bottom:1px solid var(--rule); }
+.sidebar-section:last-child { border-bottom:0; padding-bottom:0; }
+.sidebar-title { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gray-500); font-weight:600; margin-bottom:14px; }
+.callout { background:var(--blue-light); border-left:3px solid var(--blue); padding:14px 16px; }
+.callout-label { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--blue); font-weight:700; margin-bottom:6px; }
+.callout-title { font-size:13px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+.callout-meta { font-size:12px; color:var(--gray-700); line-height:1.5; }
+.checklist { list-style:none; }
+.checklist li { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--gray-200); font-size:13px; color:var(--gray-700); line-height:1.4; }
+.checklist li:last-child { border-bottom:0; }
+.chk { width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:8px; flex-shrink:0; margin-top:1px; }
+.chk-done { background:var(--green); color:#fff; }
+.chk-pend { background:var(--gray-200); color:var(--gray-500); }
+.bar-row { margin-bottom:11px; }
+.bar-row-header { display:flex; justify-content:space-between; font-size:12px; color:var(--gray-700); margin-bottom:5px; }
+.bar-track { height:2px; background:var(--gray-200); }
+.bar-fill { height:100%; background:var(--blue-mid); }
+
+/* Footer */
+.site-footer { background:var(--navy); padding:40px 48px; margin-top:64px; }
+.footer-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:flex-start; gap:32px; }
+.site-footer .logo-text-main { color:#fff; font-size:16px; }
+.site-footer .logo-text-sub { color:rgba(255,255,255,.35); }
+.footer-tagline { font-size:12px; color:rgba(255,255,255,.3); margin-top:8px; line-height:1.6; max-width:520px; }
+.footer-right { font-size:11px; color:rgba(255,255,255,.3); text-align:right; line-height:2; }
+.footer-right a { color:rgba(255,255,255,.5); text-decoration:none; }
+.footer-right a:hover { color:#fff; }
+
+@media (max-width:900px) {
+  .top-bar, .site-header, .hero, .filter-bar, .main-wrap, .site-footer { padding-left:24px; padding-right:24px; }
+  .main-wrap, .hero-inner { grid-template-columns:1fr; }
+  .header-inner { flex-direction:column; }
+  .header-nav a { padding:10px 12px; }
+  .card-header { grid-template-columns:1fr; gap:12px; }
+  .card-right { text-align:left; }
+  .footer-inner { flex-direction:column; }
+  .footer-right { text-align:left; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Equity Research · Valuation · Financial Modelling</span>
+  <!-- EDIT ME: your GitHub profile -->
+  <a class="top-link" href="https://github.com/tw-finance" target="_blank" rel="noopener">GitHub ↗</a>
+</div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo-area" href="#">
+      <div class="logo-mark"><span>EVR</span></div>
+      <div>
+        <div class="logo-text-main">Equity Valuation Research</div>
+        <div class="logo-text-sub">DCF · Scenario Analysis · Trading Comps</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="#coverage" class="active">Equity Research</a>
+      <a href="#models">Models</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Equity Research · Intrinsic Valuation · Model Library</div>
+      <h1>Equity Valuation and<br><em>Financial Modelling</em></h1>
+      <p class="hero-desc">Independent discounted cash flow models on large-cap technology, semiconductor and healthcare names, with conservative, base and optimistic scenario switches, WACC builds and downloadable Excel files.</p>
+    </div>
+    <div class="hero-stats" id="hero-stats"></div>
+  </div>
+</section>
+
+<div class="filter-bar"><div class="filter-bar-inner" id="filters"></div></div>
+
+<main class="main-wrap">
+  <div>
+    <div class="section-label" id="coverage">
+      <span class="section-label-text">Equity Research</span>
+      <span class="section-label-rule"></span>
+      <span class="section-label-count" id="count"></span>
+    </div>
+    <div id="cards"></div>
+  </div>
+
+  <aside>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Latest Coverage</div>
+      <div class="callout">
+        <div class="callout-label">Full Valuation Model</div>
+        <div class="callout-title">Micron Technology, Inc. (MU)</div>
+        <div class="callout-meta">Blended PT $346.20 · <span class="up">+9.8%</span> vs $315.42</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section" id="models">
+      <div class="sidebar-title">Model Toolkit</div>
+      <ul class="checklist">
+        <li><span class="chk chk-done">✓</span>Historical income statement &amp; cash flow</li>
+        <li><span class="chk chk-done">✓</span>WACC build-up</li>
+        <li><span class="chk chk-done">✓</span>Conservative / base / optimistic switches</li>
+        <li><span class="chk chk-done">✓</span>Terminal value (Gordon growth &amp; exit multiple)</li>
+        <li><span class="chk chk-done">✓</span>WACC × TGR sensitivity (MU)</li>
+        <li><span class="chk chk-done">✓</span>Trading comps &amp; blended target (MU)</li>
+        <li><span class="chk chk-pend">○</span>Written research reports (PDF)</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Coverage by Sector</div>
+      <div id="bars"></div>
+    </div>
+
+    <div class="cta" id="contact">
+      <h3>Get in touch</h3>
+      <p>Questions about a model or its assumptions? Feedback is welcome.</p>
+      <!-- EDIT ME: your email -->
+      <a class="btn-primary" href="mailto:you@example.com">Contact Me</a>
+    </div>
+  </aside>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="logo-text-main">Equity Valuation Research</div>
+      <div class="logo-text-sub">DCF · Scenario Analysis · Trading Comps</div>
+      <div class="footer-tagline">Independent valuation work built to develop equity research and corporate finance modelling skills. For educational purposes only, not investment advice.</div>
+    </div>
+    <div class="footer-right">
+      Last updated: November 2026<br>
+      <a href="https://github.com/tw-finance">github.com/tw-finance</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============ CONTENT ============
+   Each entry is one company. "cases" fill the scenario table; the row marked
+   base:true is the headline number. "models" become download cards
+   (files live in the /models folder next to this page). */
+const ENTRIES = [
+  {
+    company: "Micron Technology, Inc.", ticker: "NASDAQGS: MU",
+    sector: "Semiconductors", industry: "Information Technology · Memory Semiconductors",
+    title: "Full Valuation Model", date: "November 26, 2026",
+    price: 315.42, metricLabel: "Blended PT",
+    cases: [
+      { name: "Bear case (DCF)", value: 231.13 },
+      { name: "Base case (DCF)", value: 337.74 },
+      { name: "Bull case (DCF)", value: 444.55 },
+      { name: "DCF implied price", value: 328.05 },
+      { name: "Trading comps implied price", value: 364.34 },
+      { name: "Blended target price (DCF + comps)", value: 346.20, base: true }
+    ],
+    assumptions: [
+      "WACC 12.38% (built from FactSet screen; FactSet WACC 12.35%)",
+      "Terminal value via exit multiple off FY2028 base year",
+      "Unlevered FCF from a full forecast with operating NWC at ~22% of sales",
+      "Target price is a 50/50 blend of DCF and trading comps"
+    ],
+    extra: "Earlier standalone DCF (Jan 22, 2026, $397.58 price): low $338.31 · mid $412.46 · high $460.33 · \"crazy-rich\" $546.98.",
+    models: [
+      { label: "Excel Model (.xlsx)", name: "Micron Full Valuation Model", file: "models/MU-Full-Valuation-Model.xlsx",
+        desc: "Inputs, FactSet WACC build, operating forecast, DCF with sensitivity, bear/base/bull scenarios, trading comps, segment and industry analysis." },
+      { label: "Excel Model (.xlsx)", name: "Micron DCF (January 2026)", file: "models/MU-DCF.xlsx",
+        desc: "Four-scenario DCF with WACC × terminal growth sensitivity grid, historical and forecast income statement, cash flow and balance sheet." }
+    ]
+  },
+  {
+    company: "NVIDIA Corporation", ticker: "NASDAQGS: NVDA",
+    sector: "Semiconductors", industry: "Information Technology · Semiconductors",
+    title: "DCF Valuation", date: "January 26, 2026",
+    price: 186.86, metricLabel: "Base case",
+    cases: [
+      { name: "Low-end", value: 157.74 },
+      { name: "Mid-end (base)", value: 206.40, base: true },
+      { name: "High-end", value: 252.91 }
+    ],
+    assumptions: [
+      "Base case WACC 11.9%, terminal growth 3.5%",
+      "Conservative: WACC 12.4%, TGR 3.0% · Optimistic: WACC 11.4%, TGR 4.0%",
+      "Calendar-year forecast to 2031 with segment revenue build"
+    ],
+    models: [
+      { label: "Excel Model (.xlsx)", name: "NVIDIA DCF Model", file: "models/NVDA-DCF.xlsx",
+        desc: "Scenario-switch DCF, WACC build, historical income statement and cash flow, revenue model, charts and news log." }
+    ]
+  },
+  {
+    company: "Novo Nordisk A/S", ticker: "NYSE: NVO",
+    sector: "Health Care", industry: "Health Care · Pharmaceuticals",
+    title: "DCF Valuation", date: "December 24, 2025",
+    price: 52.56, metricLabel: "Base case",
+    cases: [
+      { name: "Base case", value: 29.82, base: true }
+    ],
+    assumptions: [
+      "Base case WACC 6.75%, terminal growth 3.0%",
+      "Conservative: WACC 7.25%, TGR 2.5% · Optimistic: WACC 6.25%, TGR 3.5%",
+      "Forecast to 2030 from historical and estimated income statement and cash flow"
+    ],
+    models: [
+      { label: "Excel Model (.xlsx)", name: "Novo Nordisk DCF Model", file: "models/NVO-DCF.xlsx",
+        desc: "Scenario-switch DCF, WACC build, historical and estimated income statement and cash flow, share data." }
+    ]
+  },
+  {
+    company: "Oracle Corporation", ticker: "NYSE: ORCL",
+    sector: "Software", industry: "Information Technology · Software & Cloud",
+    title: "DCF Valuation", date: "December 15, 2025",
+    price: 192.11, metricLabel: "Base case",
+    cases: [
+      { name: "Low-end", value: 129.76 },
+      { name: "Mid-end (base)", value: 167.68, base: true },
+      { name: "High-end", value: 351.83 }
+    ],
+    assumptions: [
+      "Base case WACC 8.36%, terminal growth 3.0%",
+      "Conservative: WACC 9.0%, TGR 2.0% · Optimistic: WACC 7.5%, TGR 3.5%",
+      "Forecast to 2030 reflecting cloud infrastructure revenue ramp"
+    ],
+    models: [
+      { label: "Excel Model (.xlsx)", name: "Oracle DCF Model", file: "models/ORCL-DCF.xlsx",
+        desc: "Scenario-switch DCF, WACC build, historical and estimated income statement and cash flow, charts." }
+    ]
+  },
+  {
+    company: "Meta Platforms, Inc.", ticker: "NASDAQGS: META",
+    sector: "Communication Services", industry: "Communication Services · Interactive Media",
+    title: "DCF Valuation", date: "November 12, 2025",
+    price: 618.94, metricLabel: "Base case",
+    cases: [
+      { name: "Low-end", value: 339.66 },
+      { name: "Mid-end (base)", value: 430.47, base: true },
+      { name: "High-end", value: 656.29 }
+    ],
+    assumptions: [
+      "Base case WACC 8.0%, terminal growth 2.5%",
+      "Base case 2026–30 EBIT margin 35%",
+      "Conservative: WACC 9.0%, TGR 2.0% · Optimistic: WACC 7.0%, TGR 3.0%"
+    ],
+    models: [
+      { label: "Excel Model (.xlsx)", name: "Meta DCF Model", file: "models/META-DCF.xlsx",
+        desc: "Scenario-switch DCF, WACC build, revenue model, historical income statement and cash flow, charts." }
+    ]
+  }
+];
+
+/* ============ rendering ============ */
+const $ = id => document.getElementById(id);
+const usd = v => "$" + v.toFixed(2);
+const pct = (v, p) => { const x = (v / p - 1) * 100; return `<span class="${x >= 0 ? "up" : "down"}">${x >= 0 ? "+" : ""}${x.toFixed(1)}%</span>`; };
+const sectors = [...new Set(ENTRIES.map(e => e.sector))];
+let active = "All";
+
+const nModels = ENTRIES.reduce((n, e) => n + e.models.length, 0);
+$("hero-stats").innerHTML = [[ENTRIES.length, "Companies"], [nModels, "Models"], [sectors.length, "Sectors"]]
+  .map(([v, l]) => `<div class="hero-stat"><div class="hero-stat-val">${v}</div><div class="hero-stat-lbl">${l}</div></div>`).join("");
+
+$("filters").innerHTML = ["All", ...sectors].map(c =>
+  `<button class="filter-tab${c === active ? " active" : ""}" data-cat="${c}">${c === "All" ? "All Coverage" : c}</button>`).join("");
+$("filters").addEventListener("click", e => {
+  const b = e.target.closest(".filter-tab"); if (!b) return;
+  active = b.dataset.cat;
+  document.querySelectorAll(".filter-tab").forEach(t => t.classList.toggle("active", t === b));
+  render();
+});
+
+const max = Math.max(...sectors.map(s => ENTRIES.filter(e => e.sector === s).length));
+$("bars").innerHTML = sectors.map(s => {
+  const n = ENTRIES.filter(e => e.sector === s).length;
+  return `<div class="bar-row"><div class="bar-row-header"><span>${s}</span><span>${n}</span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${n / max * 100}%"></div></div></div>`;
+}).join("");
+
+function card(e) {
+  const base = e.cases.find(c => c.base);
+  const short = e.ticker.split(": ")[1];
+  return `<article class="card">
+    <div class="card-header">
+      <div>
+        <div class="tag-row"><span class="pill">${e.industry}</span><span class="date-tag">${e.ticker}</span></div>
+        <h2 class="card-title">${e.company} — ${e.title}</h2>
+        <div class="card-intro">${e.metricLabel} ${usd(base.value)} · ${pct(base.value, e.price)} implied vs. ${usd(e.price)} share price · ${e.date}</div>
+      </div>
+      <div class="card-right">
+        <div class="card-metric">${usd(base.value)}</div>
+        <div class="card-metric-sub">${e.metricLabel} · ${short}</div>
+        <button class="expand-btn">View analysis <span class="arr">▼</span></button>
+      </div>
+    </div>
+    <div class="card-detail">
+      <div class="detail-line"><strong>Valuation date:</strong> ${e.date} · <strong>Share price used:</strong> ${usd(e.price)}</div>
+      <div class="block"><div class="block-title">Valuation Output</div>
+        <table class="data-table">
+          <tr><th>Scenario</th><th class="num">Implied price</th><th class="num">vs. current</th></tr>
+          ${e.cases.map(c => `<tr${c.base ? ' class="hl"' : ""}><td>${c.name}</td><td class="num">${usd(c.value)}</td><td class="num">${pct(c.value, e.price)}</td></tr>`).join("")}
+        </table>
+        ${e.extra ? `<div class="table-note">${e.extra}</div>` : ""}
+      </div>
+      <div class="block"><div class="block-title">Key Assumptions</div>
+        <ul>${e.assumptions.map(a => `<li>${a}</li>`).join("")}</ul>
+      </div>
+      <div class="block"><div class="block-title">Download</div>
+        <div class="model-grid">${e.models.map(m => `<div class="model-card">
+          <span class="pill">${m.label}</span>
+          <h4>${m.name}</h4>
+          <p>${m.desc}</p>
+          <a class="btn-dark" href="${m.file}" download>Download Model</a>
+        </div>`).join("")}</div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function render() {
+  const list = ENTRIES.filter(e => active === "All" || e.sector === active);
+  $("count").textContent = `${list.length} ${list.length === 1 ? "report" : "reports"}`;
+  $("cards").innerHTML = list.map(card).join("");
+}
+$("cards").addEventListener("click", e => {
+  if (e.target.closest(".card-header")) e.target.closest(".card").classList.toggle("open");
+});
+render();
+</script>
+</body>
+</html>
