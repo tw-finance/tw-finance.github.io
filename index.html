@@ -126,6 +126,15 @@ a { color:inherit; }
 .callout-label { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--blue); font-weight:700; margin-bottom:6px; }
 .callout-title { font-size:13px; font-weight:700; color:var(--navy); margin-bottom:4px; }
 .callout-meta { font-size:12px; color:var(--gray-700); line-height:1.5; }
+.bio-head { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+.bio-mark { width:44px; height:44px; background:var(--navy); color:#fff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.bio-name { font-family:var(--serif); font-size:17px; color:var(--navy); line-height:1.2; }
+.bio-role { font-size:11px; color:var(--gray-500); letter-spacing:.3px; margin-top:2px; }
+.bio-text { font-size:13px; color:var(--gray-700); line-height:1.65; margin-bottom:14px; }
+.bio-list { list-style:none; }
+.bio-list li { display:flex; flex-direction:column; padding:8px 0; border-top:1px solid var(--gray-200); font-size:12.5px; line-height:1.4; }
+.bio-list li span:first-child { font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--gray-500); font-weight:600; }
+.bio-list li span:last-child { color:var(--black); }
 .checklist { list-style:none; }
 .checklist li { display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--gray-200); font-size:13px; color:var(--gray-700); line-height:1.4; }
 .checklist li:last-child { border-bottom:0; }
@@ -178,7 +187,8 @@ a { color:inherit; }
     </a>
     <nav class="header-nav">
       <a href="#coverage" class="active">Equity Research</a>
-      <a href="#models">Models</a>
+      <a href="#library">Models</a>
+      <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -207,13 +217,13 @@ a { color:inherit; }
     </div>
     <div class="feature">
       <div class="tag-row"><span class="pill">Information Technology · Memory Semiconductors</span><span class="date-tag">NASDAQGS: MU</span></div>
-      <h2 class="card-title feature-title">Micron Technology, Inc. — Priced for the Bust</h2>
+      <h2 class="card-title feature-title">Micron Technology, Inc. - Priced for the Bust</h2>
       <div class="feature-sub">Rating: <span class="up"><b>Buy</b></span> · Price Target $717.24 · <span class="up">+19.29%</span> implied upside vs. $601.25 close (Nov. 25, 2026)</div>
       <div class="model-grid">
         <div class="model-card">
           <span class="pill">PDF Report</span>
           <h4>Equity Research: Micron Technology, Inc. (MU)</h4>
-          <p>17-page initiation report: company and industry overview, investment thesis on the memory cycle, DCF and comps valuation weighted to a $717.24 target, key statistics and FY2027–29 forecasts.</p>
+          <p>17-page initiation report: company and industry overview, investment thesis on the memory cycle, DCF and comps valuation weighted to a $717.24 target, key statistics and FY2027-29 forecasts.</p>
           <div class="btn-row">
             <a class="btn-dark" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Equity%20Research%20Report.pdf" target="_blank" rel="noopener">View PDF</a>
             <a class="btn-ghost" href="Micron%20Technology%20(NASDAQ%20MU)%20-%20Equity%20Research%20Report.pdf" download>Download</a>
@@ -249,29 +259,28 @@ a { color:inherit; }
       </div>
     </div>
 
-    <div class="sidebar-section" id="models">
-      <div class="sidebar-title">Model Toolkit</div>
-      <ul class="checklist">
-        <li><span class="chk chk-done">✓</span>Historical income statement &amp; cash flow</li>
-        <li><span class="chk chk-done">✓</span>WACC build-up</li>
-        <li><span class="chk chk-done">✓</span>Conservative / base / optimistic switches</li>
-        <li><span class="chk chk-done">✓</span>Terminal value (Gordon growth &amp; exit multiple)</li>
-        <li><span class="chk chk-done">✓</span>WACC × TGR sensitivity (MU)</li>
-        <li><span class="chk chk-done">✓</span>Trading comps &amp; blended target (MU)</li>
-        <li><span class="chk chk-done">✓</span>Written equity research report (MU)</li>
+    <div class="sidebar-section" id="about">
+      <div class="sidebar-title">About the Analyst</div>
+      <div class="bio-head">
+        <div class="bio-mark">TW</div>
+        <div>
+          <div class="bio-name">Tommy Wang</div>
+          <div class="bio-role">Investment Banking Analyst · CFA Level II Candidate</div>
+        </div>
+      </div>
+      <p class="bio-text">Investment banking analyst at Centurion One Capital in Vancouver, covering diversified issuers. CFA Level II candidate and graduate of the University of British Columbia. Founder of an independent equity research platform with 20,000+ followers and 1M+ views.</p>
+      <ul class="bio-list">
+        <li><span>Investment Banking Analyst</span><span>Centurion One Capital</span></li>
+        <li><span>Investment Banking Intern</span><span>China Galaxy Securities</span></li>
+        <li><span>Education</span><span>University of British Columbia</span></li>
+        <li><span>Designation</span><span>CFA Level II Candidate</span></li>
       </ul>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Coverage by Sector</div>
-      <div id="bars"></div>
     </div>
 
     <div class="cta" id="contact">
       <h3>Get in touch</h3>
-      <p>Questions about a model or its assumptions? Feedback is welcome.</p>
-      <!-- EDIT ME: your email -->
-      <a class="btn-primary" href="mailto:you@example.com">Contact Me</a>
+      <p>Questions about a report, a model or its assumptions? Feedback is welcome.</p>
+      <a class="btn-primary" href="https://www.linkedin.com/in/tommywang2026" target="_blank" rel="noopener">Connect on LinkedIn</a>
     </div>
   </aside>
 </main>
@@ -309,7 +318,7 @@ const ENTRIES = [
       { name: "Weighted price target (Buy)", value: 717.24, base: true }
     ],
     assumptions: [
-      "Rating: Buy (Buy above +15%, Sell below −15%); total return 19.4% including dividend",
+      "Rating: Buy (Buy above +15%, Sell below -15%); total return 19.4% including dividend",
       "WACC 13.65%, perpetuity growth 3.0%, exit multiple 6.5x EV/EBITDA (mid)",
       "Three-statement forecast to FY2031 driven by DRAM and NAND pricing and bit shipments"
     ],
@@ -392,7 +401,7 @@ const ENTRIES = [
     ],
     assumptions: [
       "Base case WACC 8.0%, terminal growth 2.5%",
-      "Base case 2026–30 EBIT margin 35%",
+      "Base case 2026-30 EBIT margin 35%",
       "Conservative: WACC 9.0%, TGR 2.0% · Optimistic: WACC 7.0%, TGR 3.0%"
     ],
     models: [
@@ -421,12 +430,6 @@ $("filters").addEventListener("click", e => {
   render();
 });
 
-const max = Math.max(...sectors.map(s => ENTRIES.filter(e => e.sector === s).length));
-$("bars").innerHTML = sectors.map(s => {
-  const n = ENTRIES.filter(e => e.sector === s).length;
-  return `<div class="bar-row"><div class="bar-row-header"><span>${s}</span><span>${n}</span></div>
-    <div class="bar-track"><div class="bar-fill" style="width:${n / max * 100}%"></div></div></div>`;
-}).join("");
 
 function card(e) {
   const base = e.cases.find(c => c.base);
@@ -435,7 +438,7 @@ function card(e) {
     <div class="card-header">
       <div>
         <div class="tag-row"><span class="pill">${e.industry}</span><span class="date-tag">${e.ticker}</span></div>
-        <h2 class="card-title">${e.company} — ${e.title}</h2>
+        <h2 class="card-title">${e.company} - ${e.title}</h2>
         <div class="card-intro">${e.metricLabel} ${usd(base.value)} · ${pct(base.value, e.price)} implied vs. ${usd(e.price)} share price · ${e.date}</div>
       </div>
       <div class="card-right">
